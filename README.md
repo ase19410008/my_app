@@ -2,15 +2,10 @@
 
 A new Flutter project.
 
-## Getting Started
+## Prerequisite
 
-This project is a starting point for a Flutter application.
+Dart SDK version: 2.17.0 (stable) (Mon May 9 10:36:47 2022 +0200) on "windows_x64"
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Framework • revision ee4e09cce0 (3 weeks ago) • 2022-05-09 16:45:18 -0700        
+Engine • revision d1b9a6938a
+Tools • Dart 2.17.0 • DevTools 2.12.2
