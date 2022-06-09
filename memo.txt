@@ -1,0 +1,22 @@
+プログラミング言語のマスコットを
+画像と文字でグリッド表示
+
+https://flutter.ctrnost.com/layout/body/grid/
+
+https://www.kindacode.com/article/flutter-gridtile-examples/
+
+https://github.com/flutter/website/blob/main/examples/layout/grid_and_list/lib/main.dart
+
+課題
+　ファイル名が連番だと表示がらく
+　ファイルをリストにしてそれを渡す
+
+dart
+https://dart.dev/guides/language/language-tour
+https://dart.dev/codelabs/iterables
+
+https://api.dart.dev/stable/2.16.2/dart-core/List-class.html
+
+flutter
+https://api.flutter.dev/flutter/dart-core/List/List.from.html
+https://pub.dev/packages/collection
