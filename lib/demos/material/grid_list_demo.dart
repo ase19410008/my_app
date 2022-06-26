@@ -9,72 +9,51 @@ import 'material_demo_types.dart';
 // BEGIN gridListsDemo
 
 class GridListDemo extends StatelessWidget {
-  const GridListDemo({super.key, required this.type});
-
-  final GridListDemoType type;
+  // const GridListDemo({super.key, required this.type});
+  const GridListDemo({super.key});
+  // final GridListDemoType type;
 
   List<_Photo> _photos(BuildContext context) {
     final localizations = GalleryLocalizations.of(context)!;
     return [
       _Photo(
-        assetName: 'places/india_chennai_flower_market.png',
-        title: localizations.placeChennai,
-        subtitle: localizations.placeFlowerMarket,
+        assetName: 'assets/images/pic0.png',
+        title: 'Duke',
+        subtitle: 'Java',
       ),
       _Photo(
-        assetName: 'places/india_tanjore_bronze_works.png',
-        title: localizations.placeTanjore,
-        subtitle: localizations.placeBronzeWorks,
+          assetName: 'assets/images/pic1.png',
+          title: 'elePHPant',
+          subtitle: 'PHP'),
+      _Photo(
+        assetName: 'assets/images/pic2.png',
+        title: 'gopher',
+        subtitle: 'Go',
       ),
       _Photo(
-        assetName: 'places/india_tanjore_market_merchant.png',
-        title: localizations.placeTanjore,
-        subtitle: localizations.placeMarket,
+        assetName: 'assets/images/pic3.png',
+        title: 'Moby Dock',
+        subtitle: 'Docker',
       ),
       _Photo(
-        assetName: 'places/india_tanjore_thanjavur_temple.png',
-        title: localizations.placeTanjore,
-        subtitle: localizations.placeThanjavurTemple,
+        assetName: 'assets/images/pic4.png',
+        title: 'octocat',
+        subtitle: 'GitHub',
       ),
       _Photo(
-        assetName: 'places/india_tanjore_thanjavur_temple_carvings.png',
-        title: localizations.placeTanjore,
-        subtitle: localizations.placeThanjavurTemple,
+        assetName: 'assets/images/pic5.png',
+        title: 'Tax',
+        subtitle: 'Linux',
       ),
       _Photo(
-        assetName: 'places/india_pondicherry_salt_farm.png',
-        title: localizations.placePondicherry,
-        subtitle: localizations.placeSaltFarm,
+        assetName: 'assets/images/pic6.png',
+        title: 'Wilber',
+        subtitle: "GIMP",
       ),
       _Photo(
-        assetName: 'places/india_chennai_highway.png',
-        title: localizations.placeChennai,
-        subtitle: localizations.placeScooters,
-      ),
-      _Photo(
-        assetName: 'places/india_chettinad_silk_maker.png',
-        title: localizations.placeChettinad,
-        subtitle: localizations.placeSilkMaker,
-      ),
-      _Photo(
-        assetName: 'places/india_chettinad_produce.png',
-        title: localizations.placeChettinad,
-        subtitle: localizations.placeLunchPrep,
-      ),
-      _Photo(
-        assetName: 'places/india_tanjore_market_technology.png',
-        title: localizations.placeTanjore,
-        subtitle: localizations.placeMarket,
-      ),
-      _Photo(
-        assetName: 'places/india_pondicherry_beach.png',
-        title: localizations.placePondicherry,
-        subtitle: localizations.placeBeach,
-      ),
-      _Photo(
-        assetName: 'places/india_pondicherry_fisherman.png',
-        title: localizations.placePondicherry,
-        subtitle: localizations.placeFisherman,
+        assetName: 'assets/images/pic7.png',
+        title: 'Dash',
+        subtitle: 'Dart',
       ),
     ];
   }
@@ -84,10 +63,10 @@ class GridListDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(GalleryLocalizations.of(context)!.demoGridListsTitle),
+        title: const Text('マスコット一覧'),
       ),
       body: GridView.count(
-        restorationId: 'grid_view_demo_grid_offset',
+        // restorationId: 'grid_view_demo_grid_offset',
         crossAxisCount: 2,
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
@@ -96,7 +75,7 @@ class GridListDemo extends StatelessWidget {
         children: _photos(context).map<Widget>((photo) {
           return _GridDemoPhotoItem(
             photo: photo,
-            tileStyle: type,
+            // tileStyle: type,
           );
         }).toList(),
       ),
@@ -124,70 +103,86 @@ class _GridTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      alignment: AlignmentDirectional.centerStart,
-      child: Text(text),
-    );
+    // return FittedBox(
+    //   fit: BoxFit.scaleDown,
+    //   alignment: AlignmentDirectional.centerStart,
+    //   child: Text(text),
+    // );
+    return Text(text);
   }
 }
 
 class _GridDemoPhotoItem extends StatelessWidget {
   const _GridDemoPhotoItem({
     required this.photo,
-    required this.tileStyle,
+    // required this.tileStyle,
   });
 
   final _Photo photo;
-  final GridListDemoType tileStyle;
+  // final GridListDemoType tileStyle;
 
   @override
   Widget build(BuildContext context) {
     final Widget image = Material(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      clipBehavior: Clip.antiAlias,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      // clipBehavior: Clip.antiAlias,
       child: Image.asset(
         photo.assetName,
-        package: 'flutter_gallery_assets',
+        // package: 'flutter_gallery_assets',
         fit: BoxFit.cover,
       ),
     );
 
-    switch (tileStyle) {
-      case GridListDemoType.imageOnly:
-        return image;
-      case GridListDemoType.header:
-        return GridTile(
-          header: Material(
-            color: Colors.transparent,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: GridTileBar(
-              title: _GridTitleText(photo.title),
-              backgroundColor: Colors.black45,
-            ),
-          ),
-          child: image,
-        );
-      case GridListDemoType.footer:
-        return GridTile(
-          footer: Material(
-            color: Colors.transparent,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(4)),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: GridTileBar(
-              backgroundColor: Colors.black45,
-              title: _GridTitleText(photo.title),
-              subtitle: _GridTitleText(photo.subtitle),
-            ),
-          ),
-          child: image,
-        );
-    }
+    // switch (tileStyle) {
+    //   case GridListDemoType.imageOnly:
+    //     return image;
+    //   case GridListDemoType.header:
+    //     return GridTile(
+    //       header: Material(
+    //         color: Colors.transparent,
+    //         shape: const RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+    //         ),
+    //         clipBehavior: Clip.antiAlias,
+    //         child: GridTileBar(
+    //           title: _GridTitleText(photo.title),
+    //           backgroundColor: Colors.black45,
+    //         ),
+    //       ),
+    //       child: image,
+    //     );
+    //   case GridListDemoType.footer:
+    //     return GridTile(
+    //       footer: Material(
+    //         color: Colors.transparent,
+    //         shape: const RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.vertical(bottom: Radius.circular(4)),
+    //         ),
+    //         clipBehavior: Clip.antiAlias,
+    //         child: GridTileBar(
+    //           backgroundColor: Colors.black45,
+    //           title: _GridTitleText(photo.title),
+    //           subtitle: _GridTitleText(photo.subtitle),
+    //         ),
+    //       ),
+    //       child: image,
+    //     );
+    // }
+    return GridTile(
+      footer: Material(
+        // color: Colors.transparent,
+        // shape: const RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.vertical(bottom: Radius.circular(4)),
+        // ),
+        // clipBehavior: Clip.antiAlias,
+        child: GridTileBar(
+          backgroundColor: Colors.black45,
+          title: _GridTitleText(photo.title),
+          subtitle: _GridTitleText(photo.subtitle),
+        ),
+      ),
+      child: image,
+    );
   }
 }
 

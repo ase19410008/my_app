@@ -20,3 +20,18 @@ https://api.dart.dev/stable/2.16.2/dart-core/List-class.html
 flutter
 https://api.flutter.dev/flutter/dart-core/List/List.from.html
 https://pub.dev/packages/collection
+
+TODO
+スワイプでグリッド表示数の増減ができる
+GestureDetector crossAxisCount:
+
+TextFieldによる検索機能
+flutter_search_bar
+
+タップによる詳細画面に遷移
+Hero carousel
+
+お気に入りの追加
+IconButton onPressed
+State<StatefulWidget>
+お気に入りの一覧表示

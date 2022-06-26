@@ -1,169 +1,219 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
-import 'package:flutter_localized_locales/flutter_localized_locales.dart';
-import 'package:my_app/demos/material/grid_list_demo.dart';
-import 'package:my_app/demos/material/material_demo_types.dart';
 
-import 'constants.dart';
-import 'data/gallery_options.dart';
-import 'routes.dart';
+// https://flutter.ctrnost.com/layout/body/grid/
+// https://github.com/flutter/gallery/blob/main/lib/demos/material/grid_list_demo.dart
+// https://api.flutter.dev/flutter/widgets/GridView-class.html
+// https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2?hl=ja#6
+// https://www.kindacode.com/article/flutter-gridtile-examples/
+// https://github.com/flutter/gallery/blob/main/lib/demos/material/bottom_app_bar_demo.dart
+// https://www.youtube.com/watch?v=4YGMGNWqhe8
 
-// export 'data/demos.dart' show pumpDeferredLibraries;
-
-void main() {
-  // runApp(const MyApp());
-  runApp(const GalleryApp());
-}
+// https://www.youtube.com/watch?v=0gbFNFA1Lzs
+// https://sanjibsinha.com/gridtile-flutter/
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
+
+  static const String _title = 'Flutter Code Sample';
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'マスコット一覧',
-      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      title: _title,
+      home: ListTileSelectExample(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+var ttl = [
+  'Duke',
+  'elePHPant',
+  'gopher',
+  'Moby Dock',
+  'octocat',
+  'Tax',
+  'Wilber',
+  'Dash'
+];
+final sub = ['Java', 'PHP', 'Go', 'Docker', 'GitHub', 'Linux', 'GIMP', 'Dart'];
+
+var fav = false;
+
+class ListTileSelectExample extends StatefulWidget {
+  const ListTileSelectExample({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  ListTileSelectExampleState createState() => ListTileSelectExampleState();
 }
 
-class _HomePageState extends State<HomePage> {
-  var mascots = <String>[
-    'Duke',
-    'elePHPant',
-    'gopher',
-    'Moby Dock',
-    'octocat',
-    'Tax',
-    'Wilber',
-    'Dash'
-  ];
+class ListTileSelectExampleState extends State<ListTileSelectExample> {
+  final int listLength = 30;
+  late List<bool> _selected;
+  bool _isGridMode = true;
 
-  var projects = <String>[
-    'Java',
-    'PHP',
-    'Go',
-    'Docker',
-    'GitHub',
-    'Linux',
-    'GIMP',
-    'Dart'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    initializeSelection();
+  }
+
+  void initializeSelection() {
+    _selected = List<bool>.generate(listLength, (_) => false);
+  }
+
+  @override
+  void dispose() {
+    _selected.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('マスコット一覧'),
+        title: const Text(
+          'マスコット一覧',
+        ),
+        actions: <Widget>[
+          if (_isGridMode)
+            IconButton(
+              icon: const Icon(Icons.list),
+              onPressed: () {
+                setState(() {
+                  _isGridMode = false;
+                });
+              },
+            )
+          else
+            IconButton(
+              icon: const Icon(Icons.grid_view),
+              onPressed: () {
+                setState(() {
+                  _isGridMode = true;
+                });
+              },
+            ),
+        ],
       ),
-      body: GridView.builder(
-          padding: const EdgeInsets.all(10),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 2 / 3,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20),
-          itemCount: mascots.length,
-          itemBuilder: (BuildContext ctx, index) {
-            return GridTile(
-              child: Image.asset(
-                'assets/images/pic$index.png',
-                fit: BoxFit.cover,
-              ),
-              footer: GridTileBar(
-                backgroundColor: Colors.black54,
-                title: Text(
-                  mascots[index],
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+      body: _isGridMode
+          ? GridBuilder(
+              selectedList: _selected,
+            )
+          : ListBuilder(
+              selectedList: _selected,
+            ),
+      floatingActionButton:
+          FloatingActionButton(child: Icon(Icons.search), onPressed: null),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+        child: IconTheme(
+            data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.list),
+                  onPressed: null,
                 ),
-                subtitle: Text(projects[index].toString()),
-              ),
-            );
-          }),
+                IconButton(
+                  icon: Icon(Icons.favorite),
+                  onPressed: null,
+                ),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: null,
+                ),
+              ],
+            )),
+      ),
     );
   }
 }
 
-class GalleryApp extends StatelessWidget {
-  const GalleryApp({
+class GridBuilder extends StatefulWidget {
+  const GridBuilder({
     super.key,
-    this.initialRoute,
-    this.isTestMode = false,
+    required this.selectedList,
   });
 
-  final String? initialRoute;
-  final bool isTestMode;
+  final List<bool> selectedList;
 
   @override
+  GridBuilderState createState() => GridBuilderState();
+}
+
+class GridBuilderState extends State<GridBuilder> {
+  @override
   Widget build(BuildContext context) {
-    return ModelBinding(
-      initialModel: GalleryOptions(
-        themeMode: ThemeMode.system,
-        textScaleFactor: systemTextScaleFactorOption,
-        customTextDirection: CustomTextDirection.localeBased,
-        locale: null,
-        timeDilation: timeDilation,
-        platform: defaultTargetPlatform,
-        isTestMode: isTestMode,
-      ),
-      child: Builder(
-        builder: (context) {
-          // final options = GalleryOptions.of(context);
-          return MaterialApp(
-            // By default on desktop, scrollbars are applied by the
-            // ScrollBehavior. This overrides that. All vertical scrollables in
-            // the gallery need to be audited before enabling this feature,
-            // see https://github.com/flutter/gallery/issues/523
-            // scrollBehavior:
-            //     const MaterialScrollBehavior().copyWith(scrollbars: false),
-            // restorationScopeId: 'rootGallery',
-            // title: 'Flutter Gallery',
-            debugShowCheckedModeBanner: false,
-            // themeMode: options.themeMode,
-            // theme: GalleryThemeData.lightThemeData.copyWith(
-            //   platform: options.platform,
-            // ),
-            // darkTheme: GalleryThemeData.darkThemeData.copyWith(
-            //   platform: options.platform,
-            // ),
-            localizationsDelegates: const [
-              ...GalleryLocalizations.localizationsDelegates,
-              LocaleNamesLocalizationsDelegate()
-            ],
-            initialRoute: initialRoute,
-            // supportedLocales: GalleryLocalizations.supportedLocales,
-            // locale: options.locale,
-            // localeListResolutionCallback: (locales, supportedLocales) {
-            //   deviceLocale = locales?.first;
-            //   return basicLocaleListResolution(locales, supportedLocales);
-            // },
-            onGenerateRoute: RouteConfiguration.onGenerateRoute,
+    return GridView.builder(
+        // itemCount: widget.selectedList.length,
+        itemCount: ttl.length,
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (_, int index) {
+          // return const InkWell(
+          //   child: GridTile(child: Icon(Icons.image)),
+          // );
+          return GridTile(
+            footer: GridTileBar(
+              backgroundColor: Colors.black,
+              title: Text(ttl[index]),
+              subtitle: Text(sub[index]),
+              trailing: fav
+                  ? IconButton(
+                      color: Colors.red,
+                      icon: Icon(Icons.favorite),
+                      onPressed: () {
+                        setState(() {
+                          fav = !fav;
+                        });
+                      },
+                    )
+                  : IconButton(
+                      icon: Icon(Icons.favorite_border),
+                      onPressed: () {
+                        setState(() {
+                          fav = !fav;
+                        });
+                      },
+                    ),
+            ),
+            child: Image.asset(
+              "assets/images/pic$index.png",
+              // "https://raw.githubusercontent.com/ravi84184/ravi84184/master/Minions/${index + 1}.jpg",
+              fit: BoxFit.cover,
+            ),
           );
-        },
-      ),
-    );
+        });
   }
 }
 
-class RootPage extends StatelessWidget {
-  const RootPage({
+class ListBuilder extends StatefulWidget {
+  const ListBuilder({
     super.key,
+    required this.selectedList,
   });
 
+  final List<bool> selectedList;
+
+  @override
+  State<ListBuilder> createState() => _ListBuilderState();
+}
+
+class _ListBuilderState extends State<ListBuilder> {
   @override
   Widget build(BuildContext context) {
-    return const ApplyTextOptions(
-      child: GridListDemo(type: GridListDemoType.footer),
-    );
+    return ListView.builder(
+        // itemCount: widget.selectedList.length,
+        itemCount: ttl.length,
+        itemBuilder: (_, int index) {
+          return ListTile(
+            title: Text(sub[index]),
+            subtitle: Text(ttl[index]),
+          );
+        });
   }
 }

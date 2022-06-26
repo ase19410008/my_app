@@ -3,3 +3,8 @@ enum GridListDemoType {
   header,
   footer,
 }
+
+enum ListDemoType {
+  oneLine,
+  twoLine,
+}
