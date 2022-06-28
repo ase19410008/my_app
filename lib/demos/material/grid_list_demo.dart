@@ -4,17 +4,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
-import 'material_demo_types.dart';
 
 // BEGIN gridListsDemo
 
 class GridListDemo extends StatelessWidget {
-  // const GridListDemo({super.key, required this.type});
   const GridListDemo({super.key});
-  // final GridListDemoType type;
 
   List<_Photo> _photos(BuildContext context) {
-    final localizations = GalleryLocalizations.of(context)!;
     return [
       _Photo(
         assetName: 'assets/images/pic0.png',
@@ -66,7 +62,6 @@ class GridListDemo extends StatelessWidget {
         title: const Text('マスコット一覧'),
       ),
       body: GridView.count(
-        // restorationId: 'grid_view_demo_grid_offset',
         crossAxisCount: 2,
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
@@ -75,7 +70,6 @@ class GridListDemo extends StatelessWidget {
         children: _photos(context).map<Widget>((photo) {
           return _GridDemoPhotoItem(
             photo: photo,
-            // tileStyle: type,
           );
         }).toList(),
       ),
@@ -103,11 +97,6 @@ class _GridTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return FittedBox(
-    //   fit: BoxFit.scaleDown,
-    //   alignment: AlignmentDirectional.centerStart,
-    //   child: Text(text),
-    // );
     return Text(text);
   }
 }
@@ -115,66 +104,21 @@ class _GridTitleText extends StatelessWidget {
 class _GridDemoPhotoItem extends StatelessWidget {
   const _GridDemoPhotoItem({
     required this.photo,
-    // required this.tileStyle,
   });
 
   final _Photo photo;
-  // final GridListDemoType tileStyle;
 
   @override
   Widget build(BuildContext context) {
     final Widget image = Material(
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      // clipBehavior: Clip.antiAlias,
       child: Image.asset(
         photo.assetName,
-        // package: 'flutter_gallery_assets',
         fit: BoxFit.cover,
       ),
     );
 
-    // switch (tileStyle) {
-    //   case GridListDemoType.imageOnly:
-    //     return image;
-    //   case GridListDemoType.header:
-    //     return GridTile(
-    //       header: Material(
-    //         color: Colors.transparent,
-    //         shape: const RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
-    //         ),
-    //         clipBehavior: Clip.antiAlias,
-    //         child: GridTileBar(
-    //           title: _GridTitleText(photo.title),
-    //           backgroundColor: Colors.black45,
-    //         ),
-    //       ),
-    //       child: image,
-    //     );
-    //   case GridListDemoType.footer:
-    //     return GridTile(
-    //       footer: Material(
-    //         color: Colors.transparent,
-    //         shape: const RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.vertical(bottom: Radius.circular(4)),
-    //         ),
-    //         clipBehavior: Clip.antiAlias,
-    //         child: GridTileBar(
-    //           backgroundColor: Colors.black45,
-    //           title: _GridTitleText(photo.title),
-    //           subtitle: _GridTitleText(photo.subtitle),
-    //         ),
-    //       ),
-    //       child: image,
-    //     );
-    // }
     return GridTile(
       footer: Material(
-        // color: Colors.transparent,
-        // shape: const RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(bottom: Radius.circular(4)),
-        // ),
-        // clipBehavior: Clip.antiAlias,
         child: GridTileBar(
           backgroundColor: Colors.black45,
           title: _GridTitleText(photo.title),

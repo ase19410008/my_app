@@ -80,18 +80,6 @@ class ListDemo extends StatelessWidget {
           restorationId: 'list_demo_list_view',
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: [
-            // for (int index = 1; index < 21; index++)
-            //   ListTile(
-            //     leading: ExcludeSemantics(
-            //       child: CircleAvatar(child: Text('$index')),
-            //     ),
-            //     title: Text(
-            //       localizations.demoBottomSheetItem(index),
-            //     ),
-            //     subtitle: type == ListDemoType.twoLine
-            //         ? Text(localizations.demoListsSecondary)
-            //         : null,
-            //   ),
             for (_Photo photo in _photos)
               ListTile(
                 title: Text(photo.title),
