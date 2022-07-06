@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/controllers/mascot_item.dart';
-import 'package:my_app/details_screen.dart';
 import 'package:my_app/models/mascots.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +13,7 @@ import 'package:provider/provider.dart';
 
 // https://www.youtube.com/watch?v=0gbFNFA1Lzs
 // https://sanjibsinha.com/gridtile-flutter/
-// void main() => runApp(const MyApp());
+
 void main() {
   runApp(MultiProvider(
     providers: [
@@ -29,7 +28,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const String _title = 'Flutter Code Sample';
+  static const String _title = 'マスコットサッチャー';
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +45,6 @@ enum FilterOptions {
   All,
 }
 
-var ttl = [
-  'Duke',
-  'elePHPant',
-  'gopher',
-  'Moby Dock',
-  'octocat',
-  'Tax',
-  'Wilber',
-  'Dash'
-];
-final sub = ['Java', 'PHP', 'Go', 'Docker', 'GitHub', 'Linux', 'GIMP', 'Dart'];
-
-var fav = false;
-
 class ListTileSelectExample extends StatefulWidget {
   const ListTileSelectExample({super.key});
 
@@ -71,7 +56,8 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
   final int listLength = 30;
   late List<bool> _selected;
   bool _isGridMode = true;
-
+  bool showFavs = false;
+  bool isSearch = false;
   var _showOnlyFavs = false;
 
   @override
@@ -98,36 +84,43 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
           'マスコット一覧',
         ),
         actions: <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.search),
-          //   onPressed: null,
-          // ),
           IconButton(
-            icon: Icon(Icons.favorite),
+            icon: const Icon(
+              Icons.favorite,
+              semanticLabel: "お気に入り一覧表示",
+            ),
             onPressed: () {
               setState(() {
-                _showOnlyFavs = true;
+                _showOnlyFavs = !_showOnlyFavs;
               });
-              FilterOptions.Favorite;
             },
+            tooltip: "お気に入り一覧表示",
           ),
           if (_isGridMode)
             IconButton(
-              icon: const Icon(Icons.list),
+              icon: const Icon(
+                Icons.list,
+                semanticLabel: "リスト表示",
+              ),
               onPressed: () {
                 setState(() {
                   _isGridMode = false;
                 });
               },
+              tooltip: "リスト表示",
             )
           else
             IconButton(
-              icon: const Icon(Icons.grid_view),
+              icon: const Icon(
+                Icons.grid_view,
+                semanticLabel: "グリッド表示",
+              ),
               onPressed: () {
                 setState(() {
                   _isGridMode = true;
                 });
               },
+              tooltip: "グリッド表示",
             ),
         ],
       ),
@@ -138,34 +131,13 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
             )
           : ListBuilder(
               selectedList: _selected,
+              showFavs: _showOnlyFavs,
             ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(50),
+      floatingActionButton: const Padding(
+        padding: EdgeInsets.all(50),
         child: FloatingActionButton(child: Icon(Icons.search), onPressed: null),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.blue,
-        child: IconTheme(
-            data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // IconButton(
-                //   icon: Icon(Icons.list),
-                //   onPressed: null,
-                // ),
-                // IconButton(
-                //   icon: Icon(Icons.favorite),
-                //   onPressed: null,
-                // ),
-                // IconButton(
-                //   icon: Icon(Icons.search),
-                //   onPressed: null,
-                // ),
-              ],
-            )),
-      ),
     );
   }
 }
@@ -191,64 +163,24 @@ class GridBuilderState extends State<GridBuilder> {
     final mascotsData = Provider.of<Mascots>(context);
     final mascots = widget.showFavs ? mascotsData.favItems : mascotsData.items;
     return GridView.builder(
-        // itemCount: widget.selectedList.length,
-        // itemCount: ttl.length,
-        itemCount: mascots.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (_, int index) {
-          // return const InkWell(
-          //   child: GridTile(child: Icon(Icons.image)),
-          // );
-          return GridTile(
-              footer: GridTileBar(
-                backgroundColor: Colors.black,
-                title: Text(ttl[index]),
-                subtitle: Text(sub[index]),
-                trailing: fav
-                    ? IconButton(
-                        color: Colors.red,
-                        icon: Icon(Icons.favorite),
-                        onPressed: () {
-                          setState(() {
-                            fav = !fav;
-                          });
-                        },
-                      )
-                    : IconButton(
-                        icon: Icon(Icons.favorite_border),
-                        onPressed: () {
-                          setState(() {
-                            fav = !fav;
-                          });
-                        },
-                      ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailsScreen(index: index)));
-                },
-                child: Image.asset(
-                  "assets/images/pic$index.png",
-                  // "https://raw.githubusercontent.com/ravi84184/ravi84184/master/Minions/${index + 1}.jpg",
-                  fit: BoxFit.cover,
-                ),
-              ));
-        });
-    // itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-    //   value: mascots[i],
-    //   child: const MascotItem(),
-    // ),
+      itemCount: mascots.length,
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        value: mascots[i],
+        child: const MascotItem(),
+      ),
+    );
   }
 }
 
 class ListBuilder extends StatefulWidget {
+  final bool showFavs;
+
   const ListBuilder({
     super.key,
     required this.selectedList,
+    required this.showFavs,
   });
 
   final List<bool> selectedList;
@@ -260,13 +192,14 @@ class ListBuilder extends StatefulWidget {
 class _ListBuilderState extends State<ListBuilder> {
   @override
   Widget build(BuildContext context) {
+    final mascotsData = Provider.of<Mascots>(context);
+    final mascots = widget.showFavs ? mascotsData.favItems : mascotsData.items;
     return ListView.builder(
-        // itemCount: widget.selectedList.length,
-        itemCount: ttl.length,
+        itemCount: mascots.length,
         itemBuilder: (_, int index) {
           return ListTile(
-            title: Text(sub[index]),
-            subtitle: Text(ttl[index]),
+            title: Text(mascots[index].name),
+            subtitle: Text(mascots[index].serviceName),
           );
         });
   }

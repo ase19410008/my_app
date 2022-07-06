@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'mascot.dart';
 
 class Mascots with ChangeNotifier {
+  var _showFavOnly = false;
+
   final List<Mascot> _items = [
     Mascot(
       name: "Duke",
