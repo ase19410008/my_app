@@ -46,8 +46,11 @@ class MascotItem extends StatelessWidget {
           onTap: () {
             Navigator.push(
                 context,
+                // MaterialPageRoute(
+                //     builder: (context) => DetailsScreen(mascot: mascot)));
                 MaterialPageRoute(
-                    builder: (context) => DetailsScreen(mascot: mascot)));
+                    builder: (context) =>
+                        CarouselWithIndicator(mascot: mascot)));
           },
           child: Image.asset(
             mascot.imageUrl,

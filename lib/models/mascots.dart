@@ -33,12 +33,12 @@ class Mascots with ChangeNotifier {
     ),
     Mascot(
       name: "Tax",
-      serviceName: "Linuxa",
+      serviceName: "Linux",
       imageUrl: "assets/images/pic5.png",
     ),
     Mascot(
       name: "Wilber",
-      serviceName: "GINP",
+      serviceName: "GIMP",
       imageUrl: "assets/images/pic6.png",
     ),
     Mascot(
