@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/models/mascots.dart';
 
 import 'models/mascot.dart';
 
 class MascotSearch extends SearchDelegate<Mascot?> {
   List<Mascot> mascots;
-  String result = "";
+  Mascot? result;
 
   MascotSearch(this.mascots);
 
@@ -31,17 +30,20 @@ class MascotSearch extends SearchDelegate<Mascot?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final suggetstions = mascots.where((mascot) {
-      return mascot.name.toLowerCase().contains(query.toLowerCase());
+    final suggetstions = mascots.where((name) {
+      return name.name.toLowerCase().contains(query.toLowerCase());
     }).toList();
 
     return ListView.builder(
       itemCount: suggetstions.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(suggetstions.elementAt(index).toString()),
+          title: Text(suggetstions.elementAt(index).name),
           onTap: () {
-            result = suggetstions.elementAt(index).toString();
+            result = suggetstions.elementAt(index);
+            print("##################");
+            print(result);
+            print("####################");
             close(context, result);
           },
         );
@@ -59,9 +61,9 @@ class MascotSearch extends SearchDelegate<Mascot?> {
       itemCount: suggetstions.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(suggetstions[index].toString()),
+          title: Text(suggetstions.elementAt(index).name),
           onTap: () {
-            query = suggetstions.elementAt(index).toString();
+            query = suggetstions.elementAt(index).name;
           },
         );
       },

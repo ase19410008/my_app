@@ -52,6 +52,10 @@ class Mascots with ChangeNotifier {
     return [..._items];
   }
 
+  List<String> get name {
+    return _items.map((e) => e.name).toList();
+  }
+
   List<Mascot> get favItems {
     return _items.where((i) => i.isFav).toList();
   }

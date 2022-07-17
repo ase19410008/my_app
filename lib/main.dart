@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/controllers/mascot_item.dart';
 import 'package:my_app/models/mascots.dart';
 import 'package:provider/provider.dart';
-import 'mascotSearch.dart';
+import 'mascot_search.dart';
+import 'package:my_app/details_screen.dart';
 
 // https://flutter.ctrnost.com/layout/body/grid/
 // https://github.com/flutter/gallery/blob/main/lib/demos/material/grid_list_demo.dart
@@ -139,12 +140,17 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
         padding: EdgeInsets.all(50),
         child: FloatingActionButton(
             child: Icon(Icons.search),
-            onPressed: () {
-              showSearch(
+            onPressed: () async {
+              final mascotsData = Provider.of<Mascots>(context, listen: false);
+              final mascots = mascotsData.items;
+              final mascot = await showSearch(
                   context: context,
                   delegate: MascotSearch(
-                    mascots!.items,
+                    mascots
                   ));
+              /*MaterialPageRoute(
+                  builder: (context) =>
+                      CarouselWithIndicator(mascot: mascot));*/
             }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
