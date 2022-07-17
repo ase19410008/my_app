@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'mascot.dart';
 
 class Mascots with ChangeNotifier {
+  var _showFavOnly = false;
+
   final List<Mascot> _items = [
     Mascot(
       name: "Duke",
@@ -31,12 +33,12 @@ class Mascots with ChangeNotifier {
     ),
     Mascot(
       name: "Tax",
-      serviceName: "Linuxa",
+      serviceName: "Linux",
       imageUrl: "assets/images/pic5.png",
     ),
     Mascot(
       name: "Wilber",
-      serviceName: "GINP",
+      serviceName: "GIMP",
       imageUrl: "assets/images/pic6.png",
     ),
     Mascot(
@@ -48,6 +50,10 @@ class Mascots with ChangeNotifier {
 
   List<Mascot> get items {
     return [..._items];
+  }
+
+  List<String> get name {
+    return _items.map((e) => e.name).toList();
   }
 
   List<Mascot> get favItems {
