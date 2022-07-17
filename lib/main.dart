@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/controllers/mascot_item.dart';
 import 'package:my_app/models/mascots.dart';
 import 'package:provider/provider.dart';
+import 'mascotSearch.dart';
 
 // https://flutter.ctrnost.com/layout/body/grid/
 // https://github.com/flutter/gallery/blob/main/lib/demos/material/grid_list_demo.dart
@@ -59,6 +60,7 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
   bool showFavs = false;
   bool isSearch = false;
   var _showOnlyFavs = false;
+  Mascots? mascots;
 
   @override
   void initState() {
@@ -133,9 +135,17 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
               selectedList: _selected,
               showFavs: _showOnlyFavs,
             ),
-      floatingActionButton: const Padding(
+      floatingActionButton: Padding(
         padding: EdgeInsets.all(50),
-        child: FloatingActionButton(child: Icon(Icons.search), onPressed: null),
+        child: FloatingActionButton(
+            child: Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: MascotSearch(
+                    mascots!.items,
+                  ));
+            }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
