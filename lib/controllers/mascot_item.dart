@@ -9,8 +9,8 @@ class MascotItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cont_text = "";
-    var icon_label = "";
+    var contText = "";
+    var iconLabel = "";
     final mascot = Provider.of<Mascot>(context, listen: false);
     return GridTile(
         footer: GridTileBar(
@@ -22,24 +22,24 @@ class MascotItem extends StatelessWidget {
                 onPressed: () {
                   mascot.toggleFavoriteStatus();
                   if (mascot.isFav) {
-                    cont_text = "${mascot.name}がお気に入りに追加されました";
-                    icon_label = "お気に入り追加";
+                    contText = "${mascot.name}がお気に入りに追加されました";
+                    iconLabel = "お気に入り追加";
                   } else {
-                    cont_text = "${mascot.name}がお気に入りから削除されました";
-                    icon_label = "お気に入り削除";
+                    contText = "${mascot.name}がお気に入りから削除されました";
+                    iconLabel = "お気に入り削除";
                   }
                   final snackBar = SnackBar(
-                    content: Text(cont_text),
+                    content: Text(contText),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 icon: Icon(
                   mascot.isFav ? Icons.favorite : Icons.favorite_border,
-                  semanticLabel: icon_label,
+                  semanticLabel: iconLabel,
                 ),
                 color: Colors.pink,
-                tooltip: icon_label,
+                tooltip: iconLabel,
               ),
             )),
         child: InkWell(
@@ -50,7 +50,7 @@ class MascotItem extends StatelessWidget {
                 //     builder: (context) => DetailsScreen(mascot: mascot)));
                 MaterialPageRoute(
                     builder: (context) =>
-                        CarouselWithIndicator(mascot: mascot)));
+                        CarouselWithIndicator(mascot: mascot, index: mascot.id)));
           },
           child: Image.asset(
             mascot.imageUrl,

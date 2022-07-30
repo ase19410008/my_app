@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 import 'material_demo_types.dart';
-import 'grid_list_demo.dart';
 
 // BEGIN listDemo
 

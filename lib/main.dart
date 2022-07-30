@@ -43,8 +43,8 @@ class MyApp extends StatelessWidget {
 }
 
 enum FilterOptions {
-  Favorite,
-  All,
+  favorite,
+  all,
 }
 
 class ListTileSelectExample extends StatefulWidget {
@@ -137,9 +137,9 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
               showFavs: _showOnlyFavs,
             ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.all(50),
+        padding: const EdgeInsets.all(50),
         child: FloatingActionButton(
-            child: Icon(Icons.search),
+            child: const Icon(Icons.search),
             onPressed: () async {
               final mascotsData = Provider.of<Mascots>(context, listen: false);
               final mascots = mascotsData.items;
@@ -148,9 +148,12 @@ class ListTileSelectExampleState extends State<ListTileSelectExample> {
                   delegate: MascotSearch(
                     mascots
                   ));
-              /*MaterialPageRoute(
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
                   builder: (context) =>
-                      CarouselWithIndicator(mascot: mascot));*/
+                      CarouselWithIndicator(mascot: mascot, index: mascot!.id))
+              );
             }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

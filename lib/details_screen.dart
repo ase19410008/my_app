@@ -47,59 +47,44 @@ class ImageSlider extends StatelessWidget {
     final mascotsData = Provider.of<Mascots>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image slider demo'),
+        title: const Text('Image slider demo'),
       ),
-      body: Container(
-        child: CarouselSlider(
-          options: CarouselOptions(),
-          items: mascotsData.items
-              .map((e) => Container(
-                    child: Center(
-                      child: Image.asset(e.imageUrl),
-                    ),
-                  ))
-              .toList(),
-        ),
+      body: CarouselSlider(
+        options: CarouselOptions(),
+        items: mascotsData.items
+            .map((e) => Center(
+              child: Image.asset(e.imageUrl),
+            ))
+            .toList(),
       ),
     );
   }
 }
 
 class CarouselWithIndicator extends StatefulWidget {
+  final int index;
   // const CarouselWithIndicator({Key? key}) : super(key: key);
-  const CarouselWithIndicator({Key? key, required this.mascot})
+  const CarouselWithIndicator({Key? key, required this.mascot, required this.index})
       : super(key: key);
 
-  final Mascot mascot;
+  final Mascot? mascot;
 
   @override
-  State<CarouselWithIndicator> createState() => _CarouselWithIndicatorState();
+  State<CarouselWithIndicator> createState() => _CarouselWithIndicatorState(index);
 }
 
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
+  int index;
   int _current = 0;
   final CarouselController _controller = CarouselController();
+
+  _CarouselWithIndicatorState(this.index) {
+    _current = index;
+  }
 
   @override
   Widget build(BuildContext context) {
     final mascotsData = Provider.of<Mascots>(context);
-    final List<Widget> imageSliders = mascotsData.items
-        .map((item) => Container(
-              child: Container(
-                child: ClipRRect(
-                    child: Stack(
-                  children: [
-                    Image.asset('name'),
-                    Positioned(
-                      child: Container(
-                        child: Text("test"),
-                      ),
-                    ),
-                  ],
-                )),
-              ),
-            ))
-        .toList();
 
     return Scaffold(
       appBar: AppBar(title: const Text('マスコット詳細')),
@@ -107,17 +92,17 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         Expanded(
           child: CarouselSlider(
             items: mascotsData.items
-                .map((e) => Container(
-                      child: Center(
-                        child: Image.asset(e.imageUrl),
-                      ),
-                    ))
+                .map((e) => Center(
+                  child: Image.asset(e.imageUrl),
+                ))
                 .toList(),
             carouselController: _controller,
-            options: CarouselOptions(onPageChanged: (index, reaason) {
-              setState(() {
-                _current = index;
-              });
+            options: CarouselOptions(
+              initialPage: widget.index,
+              onPageChanged: (index, reaason) {
+                setState(() {
+                  _current = index;
+                });
             }),
           ),
         ),
@@ -129,7 +114,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
               child: Container(
                 width: 12.0,
                 height: 12.0,
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   vertical: 8.0,
                   horizontal: 4.0,
                 ),

@@ -41,9 +41,6 @@ class MascotSearch extends SearchDelegate<Mascot?> {
           title: Text(suggetstions.elementAt(index).name),
           onTap: () {
             result = suggetstions.elementAt(index);
-            print("##################");
-            print(result);
-            print("####################");
             close(context, result);
           },
         );
