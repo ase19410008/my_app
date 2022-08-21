@@ -49,7 +49,7 @@ class Mascots with ChangeNotifier {
       imageUrl: "assets/images/pic6.png",
     ),
     Mascot(
-      id: 6,
+      id: 7,
       name: "Dash",
       serviceName: "Dart",
       imageUrl: "assets/images/pic7.png",
